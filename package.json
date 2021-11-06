@@ -1,0 +1,61 @@
+{
+  "name": "particule",
+  "version": "0.0.0",
+  "description": "Fine-grained atomic React state management library",
+  "author": "Tom Lienard",
+  "license": "MIT",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "unpkg": "./dist/index.iife.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.esm.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QuiiBz/particule.git",
+    "directory": "packages/particule"
+  },
+  "bugs": {
+    "url": "https://github.com/QuiiBz/particule/issues"
+  },
+  "homepage": "https://github.com/QuiiBz/particule#readme",
+  "scripts": {
+    "dev": "esbuild src/index.ts --sourcemap --bundle --external:react --outfile=dist/index.esm.js --format=esm --watch",
+    "dev:types": "tsc -w",
+    "build": "yarn build:cjs && yarn build:esm && yarn build:iife && yarn build:types",
+    "build:cjs": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.cjs.js --format=cjs",
+    "build:esm": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.esm.js --format=esm",
+    "build:iife": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.iife.js --format=iife",
+    "build:types": "tsc",
+    "test": "yarn test:eslint && yarn test:jest",
+    "test:eslint": "eslint . --ext .ts",
+    "test:jest": "jest --no-watchman"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.0.2",
+    "@types/react": "^17.0.34",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "esbuild": "^0.13.12",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.3.1",
+    "prettier": "^2.3.2",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
