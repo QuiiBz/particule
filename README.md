@@ -35,7 +35,7 @@
 - **TypeScript** ready
 - **Suspense** support
 - **Super-easy** API
-- **Minimal** footprint
+- **Minimal** footprint <sub>(1kB gzipped)</sub>
 
 ## 🚀 Examples
 
