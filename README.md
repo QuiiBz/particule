@@ -20,12 +20,12 @@
 
 ---
 
-- [✨ Features](#✨-features)
-- [🚀 Examples](#-examples)
+- [✨ Features](#-features)
+- [🚀 Examples](#-examples)
   - [Basic](#basic)
   - [Fine-grained](#fine-grained)
   - [Suspense](#suspense)
-- [📚 Documentation](#📚-documentation)
+- [📚 Documentation](#-documentation)
 - [License](#license)
 
 **Particule** is an atomic React state management library inspired by the best of [Recoil](https://recoiljs.org/), [Jotai](https://jotai.pmnd.rs/) and [Redux](https://redux.js.org/). You can choose **which component subscribe to which state** and so **avoid useless re-render and computations**.
