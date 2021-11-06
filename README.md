@@ -41,6 +41,10 @@
 
 ### Basic
 
+<a href="">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
+
 ```typescript
 const textAtom = atom('Hello world!')
 
@@ -57,6 +61,10 @@ function App() {
 ```
 
 ### Fine-grained
+
+<a href="">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
 
 ```typescript
 const textAtom = atom('Hello world!')
@@ -88,6 +96,10 @@ function App() {
 ```
 
 ### Suspense
+
+<a href="">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
 
 ```typescript
 const nameAtom = useAtom(async () => await fetch('https://api.namefake.com/').json())
