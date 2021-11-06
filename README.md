@@ -21,7 +21,7 @@
 ---
 
 - [✨ Features](#✨-features)
-- [  Examples](#-examples)
+- [🚀 Examples](#-examples)
   - [Basic](#basic)
   - [Fine-grained](#fine-grained)
   - [Suspense](#suspense)
@@ -37,7 +37,7 @@
 - **Super-easy** API
 - **Minimal** footprint
 
-##  Examples
+## 🚀 Examples
 
 ### Basic
 
@@ -45,17 +45,17 @@
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
-```typescript
+```tsx
 const textAtom = atom('Hello world!')
 
 function App() {
   const [text, setText] = useAtom(textAtom)
 
   return (
-    <div>
+    <>
       <p>{text}</p>
       <button onClick={() => setText('Updated!')}>Update</button>
-    </div>
+    </>
   )
 }
 ```
@@ -66,7 +66,7 @@ function App() {
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
-```typescript
+```tsx
 const textAtom = atom('Hello world!')
 
 function Text() {
@@ -87,10 +87,10 @@ function App() {
   const [text, setText] = useAtom(textAtom)
 
   return (
-    <div>
+    <>
       <Text />
       <Button />
-    </div>
+    </>
   )
 }
 ```
@@ -101,7 +101,7 @@ function App() {
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
-```typescript
+```tsx
 const nameAtom = useAtom(async () => await fetch('https://api.namefake.com/').json())
 
 function Name() {
