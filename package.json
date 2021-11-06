@@ -11,7 +11,15 @@
   "exports": {
     ".": {
       "require": "./dist/index.cjs.js",
-      "default": "./dist/index.esm.js"
+      "import": "./dist/index.esm.js"
+    },
+    "./localStorage": {
+      "require": "./dist/helpers/localStorage.cjs.js",
+      "import": "./dist/helpers/localStorage.esm.js"
+    },
+    "./reset": {
+      "require": "./dist/helpers/reset.cjs.js",
+      "import": "./dist/helpers/reset.esm.js"
     }
   },
   "files": [
@@ -27,12 +35,9 @@
   },
   "homepage": "https://github.com/QuiiBz/particule#readme",
   "scripts": {
-    "dev": "esbuild src/index.ts --sourcemap --bundle --external:react --outfile=dist/index.esm.js --format=esm --watch",
+    "dev": "node ./build.js --watch",
     "dev:types": "tsc -w",
-    "build": "yarn build:cjs && yarn build:esm && yarn build:iife && yarn build:types",
-    "build:cjs": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.cjs.js --format=cjs",
-    "build:esm": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.esm.js --format=esm",
-    "build:iife": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.iife.js --format=iife",
+    "build": "node ./build.js",
     "build:types": "tsc",
     "test": "yarn test:eslint && yarn test:jest",
     "test:eslint": "eslint . --ext .ts",
