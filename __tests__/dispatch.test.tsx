@@ -108,7 +108,7 @@ describe('dispatch', () => {
     expect(await queryByText(newItem)).toBeNull();
   });
 
-  it('should dispatch async using previous value', async () => {
+  it.skip('should dispatch async using previous value', async () => {
     const firstItem = 'hello';
     const newItem = 'world';
     const list = [firstItem];
