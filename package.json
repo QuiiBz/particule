@@ -4,22 +4,21 @@
   "description": "Fine-grained atomic React state management library",
   "author": "Tom Lienard",
   "license": "MIT",
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.esm.js",
-  "unpkg": "./dist/index.iife.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs.js",
-      "import": "./dist/index.esm.js"
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
     },
     "./localStorage": {
-      "require": "./dist/helpers/localStorage.cjs.js",
-      "import": "./dist/helpers/localStorage.esm.js"
+      "require": "./dist/cjs/helpers/localStorage.js",
+      "import": "./dist/esm/helpers/localStorage.js"
     },
     "./reset": {
-      "require": "./dist/helpers/reset.cjs.js",
-      "import": "./dist/helpers/reset.esm.js"
+      "require": "./dist/cjs/helpers/reset.js",
+      "import": "./dist/esm/helpers/reset.js"
     }
   },
   "files": [
@@ -35,10 +34,12 @@
   },
   "homepage": "https://github.com/QuiiBz/particule#readme",
   "scripts": {
-    "dev": "node ./build.js --watch",
-    "dev:types": "tsc -w",
-    "build": "node ./build.js",
-    "build:types": "tsc",
+    "dev": "concurrently 'yarn:dev:*'",
+    "dev:js": "node ./build.js -sourcemap -watch",
+    "dev:types": "tsc --outDir dist src/index.ts --declaration --emitDeclarationOnly --watch",
+    "build": "concurrently 'yarn:build:*'",
+    "build:js": "node ./build.js",
+    "build:types": "tsc --outDir dist src/index.ts --declaration --emitDeclarationOnly",
     "test": "yarn test:eslint && yarn test:jest",
     "test:eslint": "eslint --cache --fix '*.js' '{src,__tests__}/**/*.{js,ts,tsx}'",
     "test:jest": "jest --no-watchman",
@@ -49,12 +50,14 @@
     "@types/jest": "^27.0.2",
     "@types/react": "^17.0.34",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "concurrently": "^6.3.0",
     "esbuild": "^0.13.12",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "estrella": "^1.4.1",
     "husky": ">=6",
     "jest": "^27.3.1",
     "lint-staged": ">=10",
