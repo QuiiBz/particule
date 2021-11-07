@@ -178,6 +178,9 @@ function App() {
 
 ## 📚 Documentation
 
+See the website at [particule.vercel.app](https://particule.vercel.app/).
+<sub>Hosted on [Vercel](https://vercel.com/).</sub>
+
 ## License
 
 [MIT](./LICENSE)
