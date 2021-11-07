@@ -1,0 +1,60 @@
+# Async with Suspense
+
+**Suspense** allows you to use an aync function for the initial value of an atom, or async update function.
+
+## Initial value
+
+Simply transform the initial value to an async function:
+
+```tsx
+export const textAtom = atom(async () => {
+  const response = await fetch('/api/random')
+  return response.json()
+})
+```
+
+Then, wrap the componant with `<Suspense />`:
+
+```tsx
+function Text() {
+  const value = useGetAtom(textAtom)
+
+  return <p>{value}</p>
+}
+
+function App() {
+  return (
+    <Suspense fallback='Loading'>
+      <Text />
+    </Suspense>
+  )
+}
+```
+
+## Update
+
+Similar as above, the `setState` function can be async:
+
+```tsx
+function UpdateText() {
+  const setValue = useSetAtom(textAtom)
+
+  return (
+    <button onClick={() => setValue(async () => {
+      const response = await fetch('/api/random')
+      return response.json()
+    })}>Update</button>
+  )
+}
+```
+
+This will trigger suspense, and then display the new value when the async function resolves. If you don't want to trigger suspense on updates, you can use the `noSuspense` options, which will wait for the new value and then update the atom:
+
+```tsx
+setValue(async () => {
+  const response = await fetch('/api/random')
+  return response.json()
+}, {
+  noSuspense: true
+})
+```

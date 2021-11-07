@@ -1,8 +1,6 @@
-<p align="center">
-    <h1 align="center">particule</h1>
-</p>
+<h1 align="center">particule</h1>
 
-<p align="center">
+<p align="center" style={{ display: 'flex', justifyContent: 'center' }}>
     <a href="https://github.com/QuiiBz/particule/actions">
         <img src="https://github.com/QuiiBz/particule/workflows/CI/badge.svg" />
     </a>
@@ -11,24 +9,14 @@
     </a>
 </p>
 
-<p align="center">
-  <a href="#fine-grained">Fine-grained</a> <b>atomic</b> React state management library
+<div align="center">
   <br />
+  Fine-grained <b>atomic</b> React state management library
   <br />
   <code>yarn add particule</code>
-</p>
+</div>
 
 ---
-
-- [✨ Features](#-features)
-- [🚀 Examples](#-examples)
-  - [Basic](#basic)
-  - [Fine-grained](#fine-grained)
-  - [Composition](#composition)
-  - [Suspense](#suspense)
-  - [Custom `atom` with hooks](#custom-atom-with-hooks)
-- [📚 Documentation](#-documentation)
-- [License](#license)
 
 **Particule** is an atomic React state management library inspired by the best of [Recoil](https://recoiljs.org/), [Jotai](https://jotai.pmnd.rs/) and [Redux](https://redux.js.org/). You can choose **which component subscribe to which state** and so **avoid useless re-render and computations**.
 
@@ -98,29 +86,6 @@ function App() {
 }
 ```
 
-### Composition
-
-<a href="">
-  <img src="https://img.shields.io/badge/code-sandbox-black" />
-</a>
-
-```tsx
-const eurosAtom = atom(10)
-const dollarsAtom = atom(get => get(eurosAtom) * 1.15)
-
-function App() {
-  const [euros, setEuros] = useAtom(eurosAtom)
-  const [dollars, setDollars] = useAtom(dollarsAtom)
-
-  return (
-    <>
-      <input onChange={({ target }) => setEuros(target.value)} value={euros} />
-      <input onChange={({ target }) => setDollars(target.value)} value={dollars} />
-    </>
-  )
-}
-```
-
 ### Suspense
 
 <a href="">
@@ -141,6 +106,29 @@ function App() {
     <Suspense fallback='Loading...'>
       <Name />
     </Suspense>
+  )
+}
+```
+
+### Composition
+
+<a href="">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
+
+```tsx
+const eurosAtom = atom(10)
+const dollarsAtom = atom(get => get(eurosAtom) * 1.15)
+
+function App() {
+  const [euros, setEuros] = useAtom(eurosAtom)
+  const [dollars, setDollars] = useAtom(dollarsAtom)
+
+  return (
+    <>
+      <input onChange={({ target }) => setEuros(target.value)} value={euros} />
+      <input onChange={({ target }) => setDollars(target.value)} value={dollars} />
+    </>
   )
 }
 ```
@@ -175,12 +163,3 @@ function App() {
   )
 }
 ```
-
-## 📚 Documentation
-
-See the website at [particule.vercel.app](https://particule.vercel.app/).
-<sub>Hosted on [Vercel](https://vercel.com/).</sub>
-
-## License
-
-[MIT](./LICENSE)

@@ -8,6 +8,7 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
     'no-plusplus': 'off',
+    'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/no-throw-literal': 'off',
   },
 };

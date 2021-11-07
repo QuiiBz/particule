@@ -1,0 +1,75 @@
+# Hooks & `createAtom`
+
+One of the most important features of Particule is the ability to create custom helper `atom` functions that can add new functionality using hooks:
+
+There's currently two helper atoms in the core, that you can use as examples:
+
+- [`resetAtom`](/helpers/reset) to create a resetable atom
+- [`localStorageAtom`](/helpers/local-storage) to save and fetch the atom value to the `localStorage` automatically
+
+## `createAtom`
+
+This is the function used to create new helper atoms. It takes an object which is the hooks this helper atom is subcribed to. Here's an example of an helper atom that won't accept a value of `0`:
+
+```tsx
+import { createAtom } from 'particule';
+
+const noZeroAtom = createAtom({
+  beforeValueSet: (_, value) => {
+    if (value === 0) {
+      throw new Error('Cannot set value to 0')
+    }
+
+    return value
+  }
+})
+```
+
+As always, use it the same as any atom:
+
+```tsx
+const counterAtom = noZeroAtom(3)
+
+function App() {
+  const [count, setCount] = useAtom(counterAtom)
+
+  return (
+    <>
+      <p>{count}</p>
+      <button onClick={() => setCount(count => count - 1)}>Reduce</button>
+    </>
+  )
+}
+```
+
+## List of hooks
+
+### `beforeValueSet`
+
+#### Signature
+
+```tsx
+(atom: Atom<T>, atomValue: T, firstSet: boolean) => T
+```
+
+Called before a new value is set to the atom. If the hook returns a value, it will be used as the new value. `atomValue` represents the new value to be set, and `firstSet` is only `true` when the first set is done (a.k.a when the atom is initialized).
+
+### `afterValueSet`
+
+#### Signature
+
+```tsx
+(atom: Atom<T>, atomValue: T, firstSet: boolean) => void
+```
+
+Called after a new value has been set to the atom. `atomValue` represents the new value that has been set, and `firstSet` is only `true` when the first set is done (a.k.a when the atom is initialized).
+
+### `onCreate`
+
+#### Signature
+
+```tsx
+(atom: Atom<T>) => Atom<T>
+```
+
+Called when the atom is created. If the hook returns a value, it will be used as the atom's itself.

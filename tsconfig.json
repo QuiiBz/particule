@@ -12,6 +12,7 @@
   "include": [
     "./src/**/*",
     "./__tests__/**/*",
+    "./site/**/*",
     "./.eslintrc.js",
     "./*.js"
   ]
