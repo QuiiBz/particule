@@ -41,5 +41,5 @@ export default {
   nextLinks: true,
   footer: true,
   footerEditLink: 'Edit this page on GitHub',
-  footerText: <>MIT {new Date().getFullYear()} © Tom Lienard.</>,
+  footerText: <>MIT {new Date().getFullYear()} © Tom Lienard. Deployed on Vercel</>,
 };
