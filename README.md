@@ -25,6 +25,8 @@
   - [Basic](#basic)
   - [Fine-grained](#fine-grained)
   - [Suspense](#suspense)
+  - [Composition](#composition)
+  - [Custom `atom` with hooks](#custom-atom-with-hooks)
 - [📚 Documentation](#-documentation)
 - [License](#license)
 
@@ -32,10 +34,11 @@
 
 ## ✨ Features
 
+- **Super-easy** API
 - **TypeScript** ready
 - **Suspense** support
-- **Super-easy** API
 - **Minimal** footprint <sub>(1kB gzipped)</sub>
+- **Hooks** to add functionality
 
 ## 🚀 Examples
 
@@ -114,7 +117,61 @@ function App() {
   return (
     <Suspense fallback='Loading...'>
       <Name />
-    </Suspense
+    </Suspense>
+  )
+}
+```
+
+### Composition
+
+<a href="">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
+
+```tsx
+const eurosAtom = atom(10)
+const dollarsAtom = atom(get => get(eurosAtom) * 1.15)
+
+function App() {
+  const [euros, setEuros] = useAtom(eurosAtom)
+  const [dollars, setDollars] = useAtom(dollarsAtom)
+
+  return (
+    <>
+      <input onChange={({ target }) => setEuros(target.value)} value={euros}>
+      <input onChange={({ target }) => setDolars(target.value)} value={dollars}>
+    </>
+  )
+}
+```
+
+### Custom `atom` with hooks
+
+<a href="">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
+
+```tsx
+const noZeroAtom = createAtom({
+  beforeValueSet: (_, value) => {
+    if (value === 0) {
+      throw new Error('Cannot set value to 0')
+    }
+
+    return value
+  }
+})
+
+const counterAtom = noZeroAtom(3)
+
+function App() {
+  const [count, setCount] = useAtom(counterAtom)
+
+  return (
+    <>
+      <p>{count}</p>
+      <button onClick={() => setCount(count => count - 1)}>Reduce</button>
+    </>
   )
 }
 ```
