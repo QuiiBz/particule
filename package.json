@@ -40,7 +40,7 @@
     "build": "node ./build.js",
     "build:types": "tsc",
     "test": "yarn test:eslint && yarn test:jest",
-    "test:eslint": "eslint --cache --fix '*/**/*.{js,ts,tsx}'",
+    "test:eslint": "eslint --cache --fix '*.js' '{src,__tests__}/**/*.{js,ts,tsx}'",
     "test:jest": "jest --no-watchman",
     "prepare": "husky install"
   },

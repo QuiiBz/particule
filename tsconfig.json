@@ -13,6 +13,9 @@
     "outFile": "./dist/index.d.ts"
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./__tests__/**/*",
+    "./.eslintrc.js",
+    "./*.js"
   ]
 }

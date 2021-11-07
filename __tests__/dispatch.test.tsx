@@ -128,7 +128,7 @@ describe('dispatch', () => {
 
     const App: FC = () => {
       const value = useGetAtom(listAtom);
-      console.log(value);
+
       return (
         <>
           <button type="button" onClick={() => dispatchListAtom('add', newItem)}>
