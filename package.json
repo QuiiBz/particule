@@ -40,8 +40,9 @@
     "build": "node ./build.js",
     "build:types": "tsc",
     "test": "yarn test:eslint && yarn test:jest",
-    "test:eslint": "eslint . --ext .ts",
-    "test:jest": "jest --no-watchman"
+    "test:eslint": "eslint --cache --fix '*/**/*.{js,ts,tsx}'",
+    "test:jest": "jest --no-watchman",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.2",
@@ -54,7 +55,9 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": ">=6",
     "jest": "^27.3.1",
+    "lint-staged": ">=10",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.7",
     "typescript": "^4.4.4"
