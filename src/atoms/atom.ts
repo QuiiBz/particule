@@ -89,8 +89,7 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
 
   const subscribe: SubscribeAtomFn<T> = subscriber => subscribers.push(subscriber);
 
-  set(initialValue as ValueOrFn<T>, { fromInit: true });
-
+  // @ts-ignore
   theAtom = {
     get,
     set,
@@ -99,6 +98,8 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
     UNSAFE_notify: notify,
     UNSAFE_storage: {},
   };
+
+  set(initialValue as ValueOrFn<T>, { fromInit: true });
 
   return hooks?.onCreate?.(theAtom) || theAtom;
 };

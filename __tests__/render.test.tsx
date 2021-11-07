@@ -99,7 +99,6 @@ describe('re-render', () => {
     const { getByText } = render(<App />);
 
     fireEvent.click(getByText('Update'));
-
     expect(renderFn).toHaveBeenCalledTimes(2);
   });
 
@@ -127,7 +126,6 @@ describe('re-render', () => {
     const { getByText } = render(<App />);
 
     fireEvent.click(getByText('Update'));
-
     expect(renderFn).toHaveBeenCalledTimes(1);
   });
 });

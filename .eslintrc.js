@@ -7,6 +7,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
+    'no-plusplus': 'off',
     '@typescript-eslint/no-throw-literal': 'off',
   },
 };
