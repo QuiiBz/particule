@@ -7,12 +7,12 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "outFile": "./dist/index.d.ts"
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./__tests__/**/*",
+    "./.eslintrc.js",
+    "./*.js"
   ]
 }

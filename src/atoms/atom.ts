@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   Atom,
   SubscribeAtomFn,
@@ -18,7 +19,7 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
   const subscribers: Subscriber<T>[] = [];
   let atomValue: T | SuspenseResult<T>;
   let firstSet = true;
-  let atom: Atom<T>;
+  let theAtom: Atom<T>;
 
   const notify: NotifyFn = () => {
     subscribers.forEach(subscriber => subscriber(atomValue as T));
@@ -41,8 +42,8 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
         return;
       }
 
-      atomValue = hooks?.beforeValueSet?.(atom, value, firstSet) || value;
-      hooks?.afterValueSet?.(atom, atomValue, firstSet);
+      atomValue = hooks?.beforeValueSet?.(theAtom, value, firstSet) || value;
+      hooks?.afterValueSet?.(theAtom, atomValue, firstSet);
       firstSet = false;
 
       if (shouldNotify) notify();
@@ -54,18 +55,18 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
       // if (options?.fromInit) {
       const initNewValue = newValue as unknown as GetAtomInInitialFn<T> | GetAtomInInitialFn<Promise<T>>;
 
-      const result = initNewValue(atom => {
-        atom.subscribe(() => set(newValue, options));
+      const result = initNewValue(targetAtom => {
+        targetAtom.subscribe(() => set(newValue, options));
 
-        return atom.get();
+        return targetAtom.get();
       });
       // } else {
       //   result = newValue(atomValue as T);
       // }
 
       if (result instanceof Promise) {
-        atomValue = suspensePromise(result, result => {
-          setAtomValue(result, true);
+        atomValue = suspensePromise(result, promiseResult => {
+          setAtomValue(promiseResult, true);
         });
       } else {
         setAtomValue(result, !shouldAlwaysNotify);
@@ -77,13 +78,15 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
     if (shouldAlwaysNotify) notify();
   };
 
-  const UNSAFE_directSet: DirectSetAtomFn<T> = newValue => (atomValue = newValue);
+  const UNSAFE_directSet: DirectSetAtomFn<T> = newValue => {
+    atomValue = newValue;
+  };
 
   const subscribe: SubscribeAtomFn<T> = subscriber => subscribers.push(subscriber);
 
   set(initialValue as ValueOrFn<T>, { fromInit: true });
 
-  atom = {
+  theAtom = {
     get,
     set,
     subscribe,
@@ -92,7 +95,7 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
     UNSAFE_storage: {},
   };
 
-  return hooks?.onCreate?.(atom) || atom;
+  return hooks?.onCreate?.(theAtom) || theAtom;
 };
 
 export default atom;

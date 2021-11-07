@@ -4,14 +4,21 @@
   "description": "Fine-grained atomic React state management library",
   "author": "Tom Lienard",
   "license": "MIT",
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.esm.js",
-  "unpkg": "./dist/index.iife.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs.js",
-      "default": "./dist/index.esm.js"
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./localStorage": {
+      "require": "./dist/cjs/helpers/localStorage.js",
+      "import": "./dist/esm/helpers/localStorage.js"
+    },
+    "./reset": {
+      "require": "./dist/cjs/helpers/reset.js",
+      "import": "./dist/esm/helpers/reset.js"
     }
   },
   "files": [
@@ -27,30 +34,36 @@
   },
   "homepage": "https://github.com/QuiiBz/particule#readme",
   "scripts": {
-    "dev": "esbuild src/index.ts --sourcemap --bundle --external:react --outfile=dist/index.esm.js --format=esm --watch",
-    "dev:types": "tsc -w",
-    "build": "yarn build:cjs && yarn build:esm && yarn build:iife && yarn build:types",
-    "build:cjs": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.cjs.js --format=cjs",
-    "build:esm": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.esm.js --format=esm",
-    "build:iife": "esbuild src/index.ts --minify --bundle --external:react --outfile=dist/index.iife.js --format=iife",
-    "build:types": "tsc",
+    "dev": "concurrently 'yarn:dev:*'",
+    "dev:js": "node ./build.js -sourcemap -watch",
+    "dev:types": "tsc --outDir dist src/index.ts --declaration --emitDeclarationOnly --watch",
+    "build": "concurrently 'yarn:build:*'",
+    "build:js": "node ./build.js",
+    "build:types": "tsc --outDir dist src/index.ts --declaration --emitDeclarationOnly",
     "test": "yarn test:eslint && yarn test:jest",
-    "test:eslint": "eslint . --ext .ts",
-    "test:jest": "jest --no-watchman"
+    "test:eslint": "eslint --cache --fix '*.js' '{src,__tests__}/**/*.{js,ts,tsx}'",
+    "test:jest": "jest --no-watchman",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.2",
     "@types/react": "^17.0.34",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "concurrently": "^6.3.0",
     "esbuild": "^0.13.12",
     "eslint": "^7.30.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "estrella": "^1.4.1",
+    "husky": ">=6",
     "jest": "^27.3.1",
+    "lint-staged": ">=10",
     "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "ts-jest": "^27.0.7",
     "typescript": "^4.4.4"
   },
