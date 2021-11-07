@@ -1,0 +1,68 @@
+# Get Started
+
+## Installation
+
+Particule is shipped in `cjs` and `esm` formats. Install it with your favorite package manager:
+
+```bash
+npm install particule
+yarn add particule
+pnpm add particule
+```
+
+Particule uses the concept of **atoms** to manage the state. Each atom represent a piece of state, that can be read and updated from anywhere in your application.
+
+## Create an atom
+
+You can create basic atoms with the `atom` function, and we'll see later how to create more complex atoms with [`createAtom`](/advanced/hooks).
+
+```tsx
+import { atom } from 'atom'
+
+export const textAtom = atom('Hello World')
+```
+
+The type of the atom is `Atom<string>`, and is automatically inferred from the type of the initial value. If you need more logic, you can also use a callback function for the initial value (and even make it [async with suspense](/features/suspense)):
+
+```tsx
+export const textAtom = atom(() => {
+  // Extra logic here...
+  return 'Hello World'
+})
+```
+
+## Use the atom
+
+You can now use this atom anywhere in your application using the `useAtom` hook (or more [fine-grained](/features/fine-grained) hooks). Similar to `useState`, `useAtom` returns a tuple with the current value and a function to update it.
+
+```tsx
+import { useAtom } from 'particule'
+
+function App() {
+  const [value, setValue] = useAtom(textAtom)
+
+  return (
+    <div>
+      <h1>{value}</h1>
+      <button onClick={() => setValue('Updated!')}>
+        Change text
+      </button>
+    </div>
+  )
+}
+```
+
+The `setValue` function can also accept a callback instead of a value. It takes one argument, which is the current value of the atom. Similar as the initial callback, you can make it [async with suspense](/features/suspense):
+
+```tsx
+<button onClick={() => setValue(currentValue => {
+  // Extra logic here...
+  return currentValue + ' - updated!'
+})}>
+  Change text
+</button>
+```
+
+`setValue` also accepts a second argument, which is an object with options:
+- `equal` an equality function that takes `a` and `b` and returns a boolean if they are equal. Defaults to `Object.is`
+- `noSuspense` see [Async with Suspense](/features/async-suspense)

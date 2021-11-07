@@ -1,0 +1,4 @@
+{
+  "reset": "resetAtom",
+  "local-storage": "localStorageAtom"
+}

@@ -1,0 +1,26 @@
+# Composition
+
+You can **compose** atoms from other atoms, and such create a derived atom. This is very powerful, and will automatically trigger a re-render when one of the atoms changes.
+
+To use this feature, you'll need to set the initial value as a callback, and use the first argument `get`. This method allows you to get any existing atom in your application:
+
+```tsx
+const eurosAtom = atom(10)
+const dollarsAtom = atom(get => get(eurosAtom) * 1.15)
+```
+
+Then, when `eurosAtom` changes, `dollarsAtom` will be updated automatically and such trigger a re-render.
+
+```tsx
+function App() {
+  const [euros, setEuros] = useAtom(eurosAtom)
+  const [dollars, setDollars] = useAtom(dollarsAtom)
+
+  return (
+    <>
+      <input onChange={({ target }) => setEuros(target.value)} value={euros} />
+      <input onChange={({ target }) => setDollars(target.value)} value={dollars} />
+    </>
+  )
+}
+```

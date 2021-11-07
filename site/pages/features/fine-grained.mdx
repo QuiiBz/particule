@@ -1,0 +1,38 @@
+# Fine-grained
+
+One of the core concepts of Particule is the ability to manually **subscribe to an atom** to only retrive its value.
+Instead of using the `useAtom` hook, you can choose:
+
+- `useGetAtom` to only retrive the value, and such subscribe to updates
+- `useSetAtom` to only set the value, and such **don't** subscribe to updates
+
+```jsx
+import { atom, useGetAtom, useSetAtom } from 'particule'
+
+const textAtom = atom('Hello world!')
+
+function Text() {
+  const text = useGetAtom(textAtom)
+
+  return <p>{text}</p>
+}
+
+// Won't re-render!
+function Button() {
+  const setText = useSetAtom(textAtom)
+
+  return <button onClick={() => setText('Updated!')}>Update</button>
+}
+
+// Won't re-render!
+function App() {
+  const [text, setText] = useAtom(textAtom)
+
+  return (
+    <>
+      <Text />
+      <Button />
+    </>
+  )
+}
+```
