@@ -9,9 +9,9 @@ const formats = ['esm', 'cjs'];
 
 const run = async () => {
   for (const format of formats) {
-    await build({
+    build({
       entry: glob('./src/**/*.ts'),
-      outdir: './dist/esm',
+      outdir: `./dist/${format}`,
       format,
       tslint: false,
     });
