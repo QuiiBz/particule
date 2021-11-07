@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb-typescript/base', 'plugin:prettier/recommended'],
+  extends: ['airbnb-typescript', 'plugin:prettier/recommended'],
   parserOptions: {
     project: './tsconfig.json',
   },
@@ -7,6 +7,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
+    'no-plusplus': 'off',
     '@typescript-eslint/no-throw-literal': 'off',
   },
 };

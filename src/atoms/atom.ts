@@ -50,19 +50,24 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
     };
 
     if (isFunction(newValue)) {
-      // let result: T | Promise<T>;
+      let result: T | Promise<T>;
 
-      // if (options?.fromInit) {
-      const initNewValue = newValue as unknown as GetAtomInInitialFn<T> | GetAtomInInitialFn<Promise<T>>;
+      if (options?.fromInit) {
+        const initNewValue = newValue as unknown as GetAtomInInitialFn<T> | GetAtomInInitialFn<Promise<T>>;
 
-      const result = initNewValue(targetAtom => {
-        targetAtom.subscribe(() => set(newValue, options));
+        try {
+          result = initNewValue(targetAtom => {
+            targetAtom.subscribe(() => set(newValue, options));
 
-        return targetAtom.get();
-      });
-      // } else {
-      //   result = newValue(atomValue as T);
-      // }
+            return targetAtom.get();
+          });
+        } catch (e) {
+          atomValue = suspensePromise(e as Promise<T>, () => null);
+          return;
+        }
+      } else {
+        result = newValue(atomValue as T);
+      }
 
       if (result instanceof Promise) {
         atomValue = suspensePromise(result, promiseResult => {
@@ -84,8 +89,7 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
 
   const subscribe: SubscribeAtomFn<T> = subscriber => subscribers.push(subscriber);
 
-  set(initialValue as ValueOrFn<T>, { fromInit: true });
-
+  // @ts-ignore
   theAtom = {
     get,
     set,
@@ -94,6 +98,8 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
     UNSAFE_notify: notify,
     UNSAFE_storage: {},
   };
+
+  set(initialValue as ValueOrFn<T>, { fromInit: true });
 
   return hooks?.onCreate?.(theAtom) || theAtom;
 };

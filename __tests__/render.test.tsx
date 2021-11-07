@@ -1,6 +1,6 @@
 import React, { FC, Suspense } from 'react';
 import { fireEvent } from '@testing-library/react';
-import { render, wait } from './test-util';
+import { ErrorBoundary, ERROR_BOUNDARY_MESSAGE, render, wait } from './test-util';
 import { atom, useAtom, useGetAtom } from '../src';
 
 describe('render', () => {
@@ -72,6 +72,31 @@ describe('render', () => {
     await wait(1);
     await findByText(`Value: ${text}`);
   });
+
+  it('should render with suspense that throw error', async () => {
+    const textAtom = atom(async () => {
+      await wait(1);
+      throw new Error();
+    });
+
+    const App: FC = () => {
+      const [value] = useAtom(textAtom);
+
+      return <p>Value: {value}</p>;
+    };
+
+    const { findByText } = render(
+      <ErrorBoundary>
+        <Suspense fallback="Loading">
+          <App />
+        </Suspense>
+      </ErrorBoundary>,
+    );
+
+    await findByText('Loading');
+    await wait(1);
+    await findByText(ERROR_BOUNDARY_MESSAGE);
+  });
 });
 
 describe('re-render', () => {
@@ -99,7 +124,6 @@ describe('re-render', () => {
     const { getByText } = render(<App />);
 
     fireEvent.click(getByText('Update'));
-
     expect(renderFn).toHaveBeenCalledTimes(2);
   });
 
@@ -127,7 +151,6 @@ describe('re-render', () => {
     const { getByText } = render(<App />);
 
     fireEvent.click(getByText('Update'));
-
     expect(renderFn).toHaveBeenCalledTimes(1);
   });
 });

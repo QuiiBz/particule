@@ -2,8 +2,8 @@ export interface Atom<T> {
   get: GetAtomFn<T>;
   set: SetAtomFn<T>;
   subscribe: SubscribeAtomFn<T>;
-  UNSAFE_notify: NotifyFn;
   UNSAFE_directSet: DirectSetAtomFn<T>;
+  UNSAFE_notify: NotifyFn;
   UNSAFE_storage: object;
 }
 
