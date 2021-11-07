@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/react';
 import React, { FC } from 'react';
-import { render, wait } from '../test-util';
-import { atom, useAtom, resetAtom, useResetAtom } from '../../src';
+import { render } from '../test-util';
+import { useAtom, resetAtom, useResetAtom } from '../../src';
 
 describe('reset', () => {
   it('should reset atom', async () => {

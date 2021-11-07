@@ -93,7 +93,7 @@ describe('mutate', () => {
     await findByText(`Value: ${newText}`);
   });
 
-  it('should mutate witho async callback without suspense', async () => {
+  it('should mutate with async callback without suspense', async () => {
     const text = 'Hello world';
     const newText = 'Updated!';
     const textAtom = atom(text);
