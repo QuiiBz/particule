@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://github.com/QuiiBz/particule/actions">
-        <img src="https://github.com/QuiiBz/particule/workflows/Test/badge.svg" />
+        <img src="https://github.com/QuiiBz/particule/workflows/CI/badge.svg" />
     </a>
     <a href="https://github.com/QuiiBz/particule/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/Licence-MIT-blue" />
