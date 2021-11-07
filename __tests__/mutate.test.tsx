@@ -29,17 +29,17 @@ describe('mutate', () => {
     await findByText(`Value: ${newText}`);
   });
 
-  it('should mutate with callback', async () => {
+  it('should mutate with callback and old value', async () => {
     const text = 'Hello world';
     const newText = 'Updated!';
-    const textAtom = atom(() => text);
+    const textAtom = atom(text);
 
     const App: FC = () => {
       const [value, setValue] = useAtom(textAtom);
 
       return (
         <>
-          <button type="button" onClick={() => setValue(newText)}>
+          <button type="button" onClick={() => setValue(old => old + newText)}>
             Update
           </button>
           <p>Value: {value}</p>
@@ -51,23 +51,28 @@ describe('mutate', () => {
 
     await findByText(`Value: ${text}`);
     fireEvent.click(getByText('Update'));
-    await findByText(`Value: ${newText}`);
+    await findByText(`Value: ${text + newText}`);
   });
 
-  it('should mutate with suspense', async () => {
+  it('should mutate with async callback with suspense', async () => {
     const text = 'Hello world';
     const newText = 'Updated!';
-    const textAtom = atom<string>(async () => {
-      await wait(1);
-      return text;
-    });
+    const textAtom = atom(text);
 
     const App: FC = () => {
       const [value, setValue] = useAtom(textAtom);
 
       return (
         <>
-          <button type="button" onClick={() => setValue(newText)}>
+          <button
+            type="button"
+            onClick={() =>
+              setValue(async () => {
+                await wait(1);
+                return newText;
+              })
+            }
+          >
             Update
           </button>
           <p>Value: {value}</p>
@@ -81,10 +86,51 @@ describe('mutate', () => {
       </Suspense>,
     );
 
-    await findByText('Loading');
-    await wait(1);
     await findByText(`Value: ${text}`);
     fireEvent.click(getByText('Update'));
+    await findByText('Loading');
+    await wait(1);
+    await findByText(`Value: ${newText}`);
+  });
+
+  it('should mutate witho async callback without suspense', async () => {
+    const text = 'Hello world';
+    const newText = 'Updated!';
+    const textAtom = atom(text);
+
+    const App: FC = () => {
+      const [value, setValue] = useAtom(textAtom);
+
+      return (
+        <>
+          <button
+            type="button"
+            onClick={() =>
+              setValue(
+                async () => {
+                  await wait(1);
+                  return newText;
+                },
+                { noSuspense: true },
+              )
+            }
+          >
+            Update
+          </button>
+          <p>Value: {value}</p>
+        </>
+      );
+    };
+
+    const { findByText, getByText } = render(
+      <Suspense fallback="Loading">
+        <App />
+      </Suspense>,
+    );
+
+    await findByText(`Value: ${text}`);
+    fireEvent.click(getByText('Update'));
+    await wait(1);
     await findByText(`Value: ${newText}`);
   });
 });
