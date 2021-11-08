@@ -32,7 +32,7 @@
 
 ### Basic
 
-<a href="">
+<a href="https://codesandbox.io/s/basic-example-particule-l79zc?file=/src/App.tsx">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -53,7 +53,7 @@ function App() {
 
 ### Fine-grained
 
-<a href="">
+<a href="https://codesandbox.io/s/fine-grained-example-particule-lxnse?file=/src/App.tsx:0-453">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -84,33 +84,9 @@ function App() {
 }
 ```
 
-### Suspense
-
-<a href="">
-  <img src="https://img.shields.io/badge/code-sandbox-black" />
-</a>
-
-```tsx
-const nameAtom = useAtom(async () => await fetch('https://api.namefake.com/').json())
-
-function Name() {
-  const name = useGetAtom(nameAtom)
-
-  return <p>My name is {name}</p>
-}
-
-function App() {
-  return (
-    <Suspense fallback='Loading...'>
-      <Name />
-    </Suspense>
-  )
-}
-```
-
 ### Composition
 
-<a href="">
+<a href="https://codesandbox.io/s/composition-example-particule-7ln35?file=/src/App.tsx">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -131,9 +107,37 @@ function App() {
 }
 ```
 
+### Suspense
+
+<a href="https://codesandbox.io/s/suspense-example-particule-w5gj1?file=/src/App.tsx">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
+
+```tsx
+const nameAtom = atom(async () => {
+  const json = await (await fetch("https://randomuser.me/api/")).json();
+
+  return json.results[0].name.first;
+});
+
+function Name() {
+  const name = useGetAtom(nameAtom)
+
+  return <p>My name is {name}</p>
+}
+
+function App() {
+  return (
+    <Suspense fallback='Loading...'>
+      <Name />
+    </Suspense>
+  )
+}
+```
+
 ### Custom `atom` with hooks
 
-<a href="">
+<a href="https://codesandbox.io/s/custom-atom-with-hooks-example-particule-yifif?file=/src/App.tsx">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 

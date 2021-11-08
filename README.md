@@ -44,7 +44,7 @@
 
 ### Basic
 
-<a href="">
+<a href="https://codesandbox.io/s/basic-example-particule-l79zc?file=/src/App.tsx">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -65,7 +65,7 @@ function App() {
 
 ### Fine-grained
 
-<a href="">
+<a href="https://codesandbox.io/s/fine-grained-example-particule-lxnse?file=/src/App.tsx:0-453">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -98,7 +98,7 @@ function App() {
 
 ### Composition
 
-<a href="">
+<a href="https://codesandbox.io/s/composition-example-particule-7ln35?file=/src/App.tsx">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -121,12 +121,16 @@ function App() {
 
 ### Suspense
 
-<a href="">
+<a href="https://codesandbox.io/s/suspense-example-particule-w5gj1?file=/src/App.tsx">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
 ```tsx
-const nameAtom = useAtom(async () => await fetch('https://api.namefake.com/').json())
+const nameAtom = atom(async () => {
+  const json = await (await fetch("https://randomuser.me/api/")).json();
+
+  return json.results[0].name.first;
+});
 
 function Name() {
   const name = useGetAtom(nameAtom)
@@ -145,7 +149,7 @@ function App() {
 
 ### Custom `atom` with hooks
 
-<a href="">
+<a href="https://codesandbox.io/s/custom-atom-with-hooks-example-particule-yifif?file=/src/App.tsx">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
