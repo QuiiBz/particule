@@ -87,8 +87,6 @@ function Button() {
 
 // Won't re-render!
 function App() {
-  const [text, setText] = useAtom(textAtom)
-
   return (
     <>
       <Text />
