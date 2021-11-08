@@ -44,7 +44,7 @@
 
 ### Basic
 
-<a href="https://codesandbox.io/s/basic-example-particule-l79zc?file=/src/App.tsx">
+<a href="https://codesandbox.io/s/basic-example-particule-l79zc?file=/src/App.tsx" target="_blank">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -65,7 +65,7 @@ function App() {
 
 ### Fine-grained
 
-<a href="https://codesandbox.io/s/fine-grained-example-particule-lxnse?file=/src/App.tsx:0-453">
+<a href="https://codesandbox.io/s/fine-grained-example-particule-lxnse?file=/src/App.tsx:0-453" target="_blank">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -98,7 +98,7 @@ function App() {
 
 ### Composition
 
-<a href="https://codesandbox.io/s/composition-example-particule-7ln35?file=/src/App.tsx">
+<a href="https://codesandbox.io/s/composition-example-particule-7ln35?file=/src/App.tsx" target="_blank">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -121,7 +121,7 @@ function App() {
 
 ### Suspense
 
-<a href="https://codesandbox.io/s/suspense-example-particule-w5gj1?file=/src/App.tsx">
+<a href="https://codesandbox.io/s/suspense-example-particule-w5gj1?file=/src/App.tsx" target="_blank">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
@@ -149,7 +149,7 @@ function App() {
 
 ### Custom `atom` with hooks
 
-<a href="https://codesandbox.io/s/custom-atom-with-hooks-example-particule-yifif?file=/src/App.tsx">
+<a href="https://codesandbox.io/s/custom-atom-with-hooks-example-particule-yifif?file=/src/App.tsx" target="_blank">
   <img src="https://img.shields.io/badge/code-sandbox-black" />
 </a>
 
