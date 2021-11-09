@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/react';
 import React, { FC } from 'react';
 import { render } from '../test-util';
-import { useAtom, resetAtom, useResetAtom } from '../../src';
+import { atom, useAtom, resetAtom, useResetAtom, NOT_RESET_ATOM_ERROR } from '../../src';
 
 describe('reset', () => {
   it('should reset atom', async () => {
@@ -67,5 +67,24 @@ describe('reset', () => {
 
     fireEvent.click(getByText('Reset'));
     await findByText(`Value: ${text}`);
+  });
+
+  it('should throw if useResetAtom is used without a ResetAtom', async () => {
+    const text = 'Hello world';
+    const textAtom = atom(text);
+
+    const App: FC = () => {
+      const reset = useResetAtom(textAtom);
+
+      return (
+        <>
+          <button type="button" onClick={reset}>
+            Reset
+          </button>
+        </>
+      );
+    };
+
+    expect(() => render(<App />)).toThrowError(NOT_RESET_ATOM_ERROR);
   });
 });
