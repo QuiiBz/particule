@@ -89,14 +89,13 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
 
   const subscribe: SubscribeAtomFn<T> = subscriber => subscribers.push(subscriber);
 
-  // @ts-ignore
   theAtom = {
     get,
     set,
     subscribe,
     UNSAFE_directSet,
     UNSAFE_notify: notify,
-    UNSAFE_storage: {},
+    UNSAFE_storage: new WeakMap(),
   };
 
   set(initialValue as ValueOrFn<T>, { fromInit: true });

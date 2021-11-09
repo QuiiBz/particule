@@ -1,29 +1,22 @@
 import { Atom } from '../types';
+import { Atom, StorageKey } from '../types';
 import { createAtom } from '../atoms';
 
-declare module '../types' {
-  interface Atom<T> {
-    reset: () => void;
-    // @ts-ignore
-    UNSAFE_storage: {
-      savedInitialValue: T;
-    };
-  }
-}
+export type ResetAtom<T = unknown> = Atom<T> & {
+  reset: ResetAtomFn;
+};
 
-type ResetAtomFn = () => void;
+export type ResetAtomFn = () => void;
 
 export const resetAtom = createAtom({
   afterValueSet: (atom, value, firstSet) => {
     if (firstSet) {
-      // @ts-ignore
-      atom.UNSAFE_storage.savedInitialValue = value;
+      atom.UNSAFE_storage.set(RESET_KEY, value);
     }
   },
   onCreate: atom => {
     atom.reset = () => {
-      // @ts-ignore
-      atom.UNSAFE_directSet(atom.UNSAFE_storage.savedInitialValue);
+      atom.UNSAFE_directSet(atom.UNSAFE_storage.get(RESET_KEY));
       atom.UNSAFE_notify();
     };
 

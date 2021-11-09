@@ -1,11 +1,15 @@
-export interface Atom<T> {
+export type Atom<T> = {
   get: GetAtomFn<T>;
   set: SetAtomFn<T>;
   subscribe: SubscribeAtomFn<T>;
   UNSAFE_directSet: DirectSetAtomFn<T>;
   UNSAFE_notify: NotifyFn;
-  UNSAFE_storage: object;
-}
+  UNSAFE_storage: WeakMap<StorageKey, any>;
+};
+
+export type StorageKey = {
+  key: string;
+};
 
 export type ValueOrFn<T> = T | ((oldValue: T) => T) | ((oldValue: T) => Promise<T>);
 
