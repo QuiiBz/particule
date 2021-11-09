@@ -73,3 +73,71 @@ Called after a new value has been set to the atom. `atomValue` represents the ne
 ```
 
 Called when the atom is created. If the hook returns a value, it will be used as the atom's itself.
+
+## Storing data
+
+You can store data to an atom using the `UNSAFE_storage` property. In the background, a [`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) is used.
+
+For each value stored in this storage, you should create a constant representing the key to access the data, with the type `StorageKey`:
+
+```tsx
+import { StorageKey } from 'particule'
+
+export const RESET_KEY: StorageKey = {
+  key: 'initialValue'
+}
+```
+
+Then, you can add/get/remove data to the atom using this key:
+
+```tsx
+const resetAtom = createAtom({
+  afterValueSet: (atom, value, firstSet) => {
+    if (firstSet) {
+      atom.UNSAFE_storage.set(RESET_KEY, value);
+    }
+  }
+})
+```
+
+## Adding new methods to the atom
+
+You can also add new methods to an atom, by extending its type. Start by creating it, and remember that it should extends the `Atom` type:
+
+```tsx
+export type ResetAtom<T = unknown> = Atom<T> & {
+  reset: () => void
+}
+```
+
+Then, type the `createAtom` function with this new atom type. It will be automatically inferred in the hooks, so you'll be able to set implement the method:
+
+```tsx
+const resetAtom = createAtom<ResetAtom>({
+  afterValueSet: (atom, value, firstSet) => {
+    /// ...
+  },
+  onCreate: atom => {
+    atom.reset = () => {
+      atom.UNSAFE_directSet(atom.UNSAFE_storage.get(RESET_KEY))
+      atom.UNSAFE_notify()
+    }
+
+    return atom
+  }
+})
+```
+
+You can then create a custom React hook to use this new method:
+
+```ts
+export const useResetAtom = <T>(atom: Atom<T>): ResetAtomFn => {
+  const isResetAtom = (value: Atom<T>): value is ResetAtom<T> => 'reset' in value
+
+  if (isResetAtom(atom)) {
+    return atom.reset
+  }
+
+  throw new Error('`useResetAtom` can only be used with atoms from `resetAtom`')
+}
+```
