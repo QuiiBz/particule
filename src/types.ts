@@ -1,11 +1,15 @@
-export interface Atom<T> {
+export type Atom<T> = {
   get: GetAtomFn<T>;
   set: SetAtomFn<T>;
   subscribe: SubscribeAtomFn<T>;
   UNSAFE_directSet: DirectSetAtomFn<T>;
   UNSAFE_notify: NotifyFn;
-  UNSAFE_storage: object;
-}
+  UNSAFE_storage: WeakMap<StorageKey, any>;
+};
+
+export type StorageKey = {
+  key: string;
+};
 
 export type ValueOrFn<T> = T | ((oldValue: T) => T) | ((oldValue: T) => Promise<T>);
 
@@ -26,10 +30,10 @@ export type SubscribeAtomFn<T> = (subscriber: Subscriber<T>) => void;
 export type DirectSetAtomFn<T> = (newValue: T) => void;
 export type NotifyFn = () => void;
 
-export type Hooks<T = unknown> = {
-  beforeValueSet?: (atom: Atom<T>, atomValue: T, firstSet: boolean) => T;
-  afterValueSet?: (atom: Atom<T>, atomValue: T, firstSet: boolean) => void;
-  onCreate?: (atom: Atom<T>) => Atom<T>;
+export type Hooks<T, AtomValue extends Atom<T> = Atom<T>> = {
+  beforeValueSet?: (atom: AtomValue, atomValue: T, firstSet: boolean) => T;
+  afterValueSet?: (atom: AtomValue, atomValue: T, firstSet: boolean) => void;
+  onCreate?: (atom: AtomValue) => AtomValue;
 };
 
 export type Dispatcher<T> = {

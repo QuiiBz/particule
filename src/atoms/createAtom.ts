@@ -1,9 +1,10 @@
 import { atom } from './atom';
-import { Hooks, InitialValueOrFn } from '../types';
+import { Hooks, Atom } from '../types';
 
-const createAtom =
-  (hooks: Hooks) =>
-  <T>(initialValue: InitialValueOrFn<T>) =>
-    atom<T>(initialValue, hooks as Hooks<T>);
+const createAtom = <T extends Atom<unknown>>(hooks: Hooks<unknown, T>) => {
+  const atomFn = atom.bind(hooks);
+
+  return atomFn;
+};
 
 export default createAtom;

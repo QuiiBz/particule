@@ -15,11 +15,13 @@ import {
 } from '../types';
 import { isFunction, isSuspense, suspensePromise } from '../utils';
 
-export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): Atom<T> => {
+export function atom<T>(initialValue: InitialValueOrFn<T>): Atom<T> {
   const subscribers: Subscriber<T>[] = [];
   let atomValue: T | SuspenseResult<T>;
   let firstSet = true;
   let theAtom: Atom<T>;
+
+  const hooks: Hooks<T> | undefined = this;
 
   const notify: NotifyFn = () => {
     subscribers.forEach(subscriber => subscriber(atomValue as T));
@@ -89,19 +91,18 @@ export const atom = <T>(initialValue: InitialValueOrFn<T>, hooks?: Hooks<T>): At
 
   const subscribe: SubscribeAtomFn<T> = subscriber => subscribers.push(subscriber);
 
-  // @ts-ignore
   theAtom = {
     get,
     set,
     subscribe,
     UNSAFE_directSet,
     UNSAFE_notify: notify,
-    UNSAFE_storage: {},
+    UNSAFE_storage: new WeakMap(),
   };
 
   set(initialValue as ValueOrFn<T>, { fromInit: true });
 
   return hooks?.onCreate?.(theAtom) || theAtom;
-};
+}
 
 export default atom;
