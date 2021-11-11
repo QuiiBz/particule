@@ -18,8 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/QuiiBz/particule.git",
-    "directory": "packages/particule"
+    "url": "git+https://github.com/QuiiBz/particule.git"
   },
   "bugs": {
     "url": "https://github.com/QuiiBz/particule/issues"
