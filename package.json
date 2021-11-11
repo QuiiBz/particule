@@ -11,14 +11,6 @@
     ".": {
       "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js"
-    },
-    "./localStorage": {
-      "require": "./dist/cjs/helpers/localStorage.js",
-      "import": "./dist/esm/helpers/localStorage.js"
-    },
-    "./reset": {
-      "require": "./dist/cjs/helpers/reset.js",
-      "import": "./dist/esm/helpers/reset.js"
     }
   },
   "files": [

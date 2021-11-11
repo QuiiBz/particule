@@ -34,6 +34,7 @@ export type Hooks<T, AtomValue extends Atom<T> = Atom<T>> = {
   beforeValueSet?: (atom: AtomValue, atomValue: T, firstSet: boolean) => T;
   afterValueSet?: (atom: AtomValue, atomValue: T, firstSet: boolean) => void;
   onCreate?: (atom: AtomValue) => AtomValue;
+  onGet?: (atom: AtomValue) => T;
 };
 
 export type Dispatcher<T> = {

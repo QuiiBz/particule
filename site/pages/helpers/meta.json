@@ -1,4 +1,5 @@
 {
   "reset": "resetAtom",
-  "local-storage": "localStorageAtom"
+  "local-storage": "localStorageAtom",
+  "history": "historyAtom"
 }

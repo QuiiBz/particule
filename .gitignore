@@ -2,6 +2,7 @@ node_modules/
 dist/
 coverage/
 .idea/
+vite-project/
 
 .DS_Store
 *.log

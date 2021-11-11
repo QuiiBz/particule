@@ -28,6 +28,10 @@ export function atom<T>(initialValue: InitialValueOrFn<T>): Atom<T> {
   };
 
   const get: GetAtomFn<T> = () => {
+    if (hooks?.onGet) {
+      return hooks.onGet(theAtom);
+    }
+
     if (isSuspense(atomValue)) {
       return atomValue.read();
     }
