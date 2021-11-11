@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/react';
 import React, { FC } from 'react';
 import { render } from '../test-util';
-import { atom, useAtom, useResetAtom, useHistoryAtom, NOT_HISTORY_ATOM_ERROR, historyAtom } from '../../src';
+import { atom, useAtom, useHistoryAtom, NOT_HISTORY_ATOM_ERROR, historyAtom } from '../../src';
 
 describe('history', () => {
   it('should undo redo history atom', async () => {
