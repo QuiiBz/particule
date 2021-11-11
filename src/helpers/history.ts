@@ -2,9 +2,11 @@ import { Atom, StorageKey } from '../types';
 import { createAtom } from '../atoms';
 
 export type HistoryAtom<T = unknown> = Atom<T> & {
-  undo: () => void;
-  redo: () => void;
+  undo: UndoRedoFn;
+  redo: UndoRedoFn;
 };
+
+export type UndoRedoFn = () => void;
 
 export const PAST_KEY: StorageKey = {
   key: 'history',
@@ -17,6 +19,8 @@ export const PRESENT_KEY: StorageKey = {
 export const FUTURE_KEY: StorageKey = {
   key: 'future',
 };
+
+export const NOT_HISTORY_ATOM_ERROR = '`useHistoryAtom` can only be used with atoms from `historyAtom`';
 
 export const historyAtom = createAtom<HistoryAtom>({
   beforeValueSet: (atom, value, firstSet) => {
@@ -71,3 +75,16 @@ export const historyAtom = createAtom<HistoryAtom>({
     return atom.UNSAFE_storage.get(PRESENT_KEY);
   },
 });
+
+export const useHistoryAtom = <T>(atom: Atom<T>): { undo: UndoRedoFn; redo: UndoRedoFn } => {
+  const isHistoryAtom = (value: Atom<T>): value is HistoryAtom<T> => 'undo' in value && 'redo' in value;
+
+  if (isHistoryAtom(atom)) {
+    return {
+      undo: atom.undo,
+      redo: atom.redo,
+    };
+  }
+
+  throw new Error(NOT_HISTORY_ATOM_ERROR);
+};
