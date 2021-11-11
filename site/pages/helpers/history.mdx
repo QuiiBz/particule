@@ -1,0 +1,47 @@
+# `historyAtom` helper
+
+Helper atoms are created using [`createAtom`](/advanced/hooks). They are similar to the `atom` function, except that they add new functionality to the atom using [`hooks`](/advanced/hooks).
+
+This `historyAtom` helper can be used to create an atom that can go back and forth in time, using `undo` and `redo` methods.
+
+Start by creating the atom:
+
+```tsx
+import { historyAtom } from 'particule'
+
+export const textAtom = historyAtom('Hello World')
+```
+
+Use it the same way as you would with an atom:
+
+```tsx
+function App() {
+  const [value, setValue] = useAtom(textAtom)
+
+  return (
+    <div>
+      <h1>{value}</h1>
+      <button onClick={() => setValue('Updated!')}>
+        Change text
+      </button>
+    </div>
+  )
+}
+```
+
+And use the `useHistoryAtom` hook to retrieve the `undo` and `redo` methods:
+
+```tsx
+import { useHistoryAtom } from 'particule'
+
+function UndoRedo() {
+  const { undo, redo } = useResetAtom(textAtom)
+
+  return (
+    <>
+      <button onClick={undo}>Undo</button>
+      <button onClick={redo}>Redo</button>
+    </>
+  )
+}
+```
