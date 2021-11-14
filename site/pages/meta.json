@@ -1,7 +1,10 @@
 {
-  "index": "Introduction",
-  "get-started": "Get Started",
-  "features": "Features",
-  "helpers": "Helpers",
-  "advanced": "Advanced"
+  "index": {
+    "title": "Home",
+    "type": "nav"
+  },
+  "docs": {
+    "title": "Docs",
+    "type": "nav"
+  }
 }
