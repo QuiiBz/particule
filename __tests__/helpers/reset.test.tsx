@@ -62,7 +62,7 @@ describe('reset', () => {
 
     for (let i = 0; i < 10; i++) {
       fireEvent.click(getByText('Update'));
-      expect(await queryByText(`Value: ${text}`)).toBeNull();
+      expect(queryByText(`Value: ${text}`)).toBeNull();
     }
 
     fireEvent.click(getByText('Reset'));

@@ -96,16 +96,16 @@ describe('dispatch', () => {
     const { findByText, getByText, queryByText } = render(<App />);
 
     await findByText(firstItem);
-    expect(await queryByText(newItem)).toBeNull();
+    expect(queryByText(newItem)).toBeNull();
     fireEvent.click(getByText('Add item'));
     await findByText(firstItem);
     await findByText(newItem);
     fireEvent.click(getByText('Remove item'));
     await findByText(firstItem);
-    expect(await queryByText(newItem)).toBeNull();
+    expect(queryByText(newItem)).toBeNull();
     fireEvent.click(getByText('Clear'));
-    expect(await queryByText(firstItem)).toBeNull();
-    expect(await queryByText(newItem)).toBeNull();
+    expect(queryByText(firstItem)).toBeNull();
+    expect(queryByText(newItem)).toBeNull();
   });
 
   it('should dispatch async using previous value', async () => {
@@ -153,17 +153,17 @@ describe('dispatch', () => {
     );
 
     await findByText(firstItem);
-    expect(await queryByText(newItem)).toBeNull();
+    expect(queryByText(newItem)).toBeNull();
     fireEvent.click(getByText('Add item'));
     await findByText(firstItem);
     await findByText(newItem);
     fireEvent.click(getByText('Remove item'));
     await wait(1);
     await findByText(firstItem);
-    expect(await queryByText(newItem)).toBeNull();
+    expect(queryByText(newItem)).toBeNull();
     fireEvent.click(getByText('Clear'));
     await wait(1);
-    expect(await queryByText(firstItem)).toBeNull();
-    expect(await queryByText(newItem)).toBeNull();
+    expect(queryByText(firstItem)).toBeNull();
+    expect(queryByText(newItem)).toBeNull();
   });
 });
