@@ -1,0 +1,54 @@
+# Dispatch
+
+**Dispatch** may sound familiar if you've used [Redux](https://redux.js.org/) in the paste. The API is quite similar.
+
+## Basic example
+
+First, import the `dispatch` method:
+
+```tsx
+import { dispatch } from 'particule'
+```
+
+Then, call this function to create a new dispatch. The first parameter is the atom to dispatch on, and the second one is a callback returning an object of dispatch functions.
+
+```tsx
+const counterAtom = atom(0)
+const dispatchCounter = dispatch(counterAtom, value => ({
+  increment: () => value + 1,
+  decrement: () => value - 1,
+}))
+```
+
+As you can see, the callback returning the object of dispatch function can take one argument, which is the current value of the atom. Each dispatch function returns the new value of the atom.
+
+To call one of these dispatch function, use the returned function from the `dispatch` one. The first argument will be the name of the dispatch function to execute:
+
+```tsx
+function App() {
+  return (
+    <>
+      <button onClick={() => dispatchCounter('increment')}>Increment</button>
+      <button onClick={() => dispatchCounter('decrement')}>Decrement</button>
+    </>
+  )
+}
+```
+
+## Add arguments
+
+Of course, you can add argument to any dispatch function to make it dynamic. Let's transform the above one to be able to pass a custom number to increment/decrement to the current value, instead of this hard-coded `1`:
+
+```tsx
+const dispatchCounter = dispatch(counterAtom, value => ({
+  increment: (newValue: number) => value + newValue,
+  decrement: (newValue: number) => value - newValue,
+}))
+```
+
+Then, you can simply pass each argument after the name of the dispatch function when calling this `dispatchCounter`. The type of each argument will be automatically inferred, so it's important to type them correctly.
+
+```tsx
+<button onClick={() => dispatchCounter('increment', 1)}>Increment</button>
+<button onClick={() => dispatchCounter('decrement', 1)}>Decrement</button>
+```

@@ -26,6 +26,7 @@
   - [Fine-grained](#fine-grained)
   - [Composition](#composition)
   - [Suspense](#suspense)
+  - [Dispatch](#dispatch)
   - [Custom `atom` with hooks](#custom-atom-with-hooks)
 - [📚 Documentation](#-documentation)
 - [License](#license)
@@ -143,6 +144,32 @@ function App() {
     <Suspense fallback='Loading...'>
       <Name />
     </Suspense>
+  )
+}
+```
+
+### Dispatch
+
+<a href="https://codesandbox.io/s/dispatch-particule-0p60u?file=/src/App.tsx" target="_blank">
+  <img src="https://img.shields.io/badge/code-sandbox-black" />
+</a>
+
+```tsx
+const counterAtom = atom(0)
+const dispatchCounter = dispatch(counterAtom, value => ({
+  increment: (newValue: number) => value + newValue,
+  decrement: (newValue: number) => value - newValue,
+}))
+
+function App() {
+  const counter = useGetAtom(counterAtom)
+
+  return (
+    <>
+      <p>{counter}</p>
+      <button onClick={() => dispatchCounter('increment', 1)}>Increment</button>
+      <button onClick={() => dispatchCounter('decrement', 1)}>Decrement</button>
+    </>
   )
 }
 ```

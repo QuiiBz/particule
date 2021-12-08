@@ -17,14 +17,11 @@ const dispatch = <T, D extends Dispatcher<T>>(
     // @ts-ignore
     const dispatchResult = dispatchFn(...value);
 
-    // @ts-ignore
-    atom.set(dispatchResult);
-
-    // if (dispatchResult instanceof Promise) {
-    //   dispatchResult.then(newValue => atom.set(newValue));
-    // } else {
-    //   atom.set(dispatchResult);
-    // }
+    if (dispatchResult instanceof Promise) {
+      dispatchResult.then(newValue => atom.set(newValue));
+    } else {
+      atom.set(dispatchResult);
+    }
   };
 };
 
