@@ -1,6 +1,6 @@
 {
   "name": "particule",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Fine-grained atomic React state management library",
   "author": "Tom Lienard",
   "license": "MIT",
