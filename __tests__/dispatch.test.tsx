@@ -108,7 +108,7 @@ describe('dispatch', () => {
     expect(await queryByText(newItem)).toBeNull();
   });
 
-  it.skip('should dispatch async using previous value', async () => {
+  it('should dispatch async using previous value', async () => {
     const firstItem = 'hello';
     const newItem = 'world';
     const list = [firstItem];
@@ -120,7 +120,6 @@ describe('dispatch', () => {
       },
       remove: async (oldValue: string) => {
         await wait(1);
-
         return [...value].filter(current => current !== oldValue);
       },
       clear: () => [],
@@ -156,15 +155,14 @@ describe('dispatch', () => {
     await findByText(firstItem);
     expect(await queryByText(newItem)).toBeNull();
     fireEvent.click(getByText('Add item'));
-    await findByText('Loading');
     await findByText(firstItem);
     await findByText(newItem);
     fireEvent.click(getByText('Remove item'));
-    await findByText('Loading');
+    await wait(1);
     await findByText(firstItem);
     expect(await queryByText(newItem)).toBeNull();
     fireEvent.click(getByText('Clear'));
-    // await findByText('Loading');
+    await wait(1);
     expect(await queryByText(firstItem)).toBeNull();
     expect(await queryByText(newItem)).toBeNull();
   });
