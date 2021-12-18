@@ -3,4 +3,19 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.js',
 });
 
-module.exports = withNextra();
+const PLAUSIBLE_URL = process.env.SELF_HOSTED_PLAUSIBLE_URL || 'https://plausible.io/';
+
+module.exports = withNextra({
+  async rewrites() {
+    return [
+      {
+        source: '/js/script.js',
+        destination: `${PLAUSIBLE_URL}/js/plausible.js`,
+      },
+      {
+        source: '/api/event',
+        destination: `${PLAUSIBLE_URL}/api/event`,
+      },
+    ];
+  },
+});
