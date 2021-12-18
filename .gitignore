@@ -8,3 +8,5 @@ vite-project/
 *.log
 .eslintcache
 
+
+.vercel

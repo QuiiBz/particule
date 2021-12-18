@@ -6,7 +6,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <script defer data-domain="particule.vercel.app" src="https://plausible.lnrd.fr:20443/js/plausible.js" />
+          <script defer data-domain="particule.vercel.app" src="/js/script.js" />
         </Head>
         <body>
           <Main />
