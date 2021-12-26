@@ -39,6 +39,10 @@
     "release:major": "yarn build && release major",
     "prepare": "husky install"
   },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=6"
+  },
   "devDependencies": {
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.2",
